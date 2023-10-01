@@ -1,0 +1,9 @@
+<h1><%= @event.name %></h1>
+<% if @event.description %>
+  <p><i><%= @event.description %></i></p>
+<% end %>
+<p>Starting at (<%= @event.start_date %>)</p>
+<% if @event.end_date %>
+  <p>Ended at (<%= @event.end_date %>)</p>
+<% end %>
+<p>Created at (<%= @event.created_at %>)</p>
