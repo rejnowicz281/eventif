@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/events/:id/edit", to: "events#edit", as: "edit_event"
   put "/events/:id", to: "events#update"
   delete "/events/:id", to: "events#destroy", as: "destroy_event"
+  patch "/events/:id/end", to: "events#end_event", as: "end_event"
+  patch "/events/:id/resume", to: "events#resume_event", as: "resume_event"
 
   root "events#index"
 end

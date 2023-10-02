@@ -1,16 +1,28 @@
 <h1><%= @event.name %></h1>
+
 <% if @event.description %>
   <p><i><%= @event.description %></i></p>
 <% end %>
+
 <% if @event.end_date %>
   <p>Started at (<%= @event.start_date %>)</p>
   <p>Ended at (<%= @event.end_date %>)</p>
 <% else %>
   <p>Starting at (<%= @event.start_date %>)</p>
 <% end %>
+
 <p>Created at (<%= @event.created_at %>)</p>
+
 <p>By <%= @event.creator.full_name %> </p>
+
 <% if @event.creator == current_user %>
+  <% if @event.end_date %>
+    <%= button_to "Resume Event", resume_event_path, method: :patch %>
+  <% else %>
+    <%= button_to "End Event", end_event_path, method: :patch %>
+  <% end %>
+
   <%= link_to "Edit Event", edit_event_path %>
+
   <%= link_to "Delete Event", destroy_event_path,  data: { turbo_method: :delete } %>
 <% end %>

@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :end_event, :resume_event]
+
   def index
     @events = Event.all
   end
 
   def show
-    @event = Event.find(params[:id])
   end
 
   def new
@@ -22,12 +23,9 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = current_user.events.find(params[:id])
   end
 
   def update
-    @event = current_user.events.find(params[:id])
-
     if @event.update(event_params)
       redirect_to @event
     else
@@ -36,15 +34,30 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = current_user.events.find(params[:id])
-
     @event.destroy
 
     redirect_to root_path
   end
 
+  # NON-CRUD actions
+  def end_event
+    if @event.update(end_date: Date.today)
+      redirect_to @event
+    end
+  end
+
+  def resume_event
+    if @event.update(end_date: nil)
+      redirect_to @event
+    end
+  end
+
   private
   def event_params
     params.require(:event).permit(:name, :description, :start_date)
+  end
+
+  def set_event
+    @event = Event.find(params[:id])
   end
 end
