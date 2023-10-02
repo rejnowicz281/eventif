@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   delete "/events/:id", to: "events#destroy", as: "destroy_event"
   patch "/events/:id/end", to: "events#end_event", as: "end_event"
   patch "/events/:id/resume", to: "events#resume_event", as: "resume_event"
+  patch "/events/:id/make_private", to: "events#make_private", as: "make_private"
+  patch "/events/:id/make_public", to: "events#make_public", as: "make_public"
 
   root "events#index"
 end

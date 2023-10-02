@@ -1,17 +1,27 @@
 <h1><%= @event.name %></h1>
 
-<% if @event.description %>
-  <p><i><%= @event.description %></i></p>
-<% end %>
-
-<% if @event.end_date %>
-  <p>Started at (<%= @event.start_date %>)</p>
-  <p>Ended at (<%= @event.end_date %>)</p>
+<% if @event.private %>
+  <p>This event is <i>Private</i>. <%= current_user == @event.creator ?
+  "That means you have to approve of any join requests to this event. Users that haven't joined can't see the contents of the event" 
+  : "The creator needs to approve your request before joining the event" %>.</p>
 <% else %>
-  <p>Starting at (<%= @event.start_date %>)</p>
+  <p>This event is <i>Public</i>.</p>
 <% end %>
 
-<p>Created at (<%= @event.created_at %>)</p>
+<% if !@event.private || (@event.private && current_user == @event.creator) %>
+  <% if @event.description %>
+    <p><i><%= @event.description %></i></p>
+  <% end %>
+
+  <% if @event.end_date %>
+    <p>Started at (<%= @event.start_date %>)</p>
+    <p>Ended at (<%= @event.end_date %>)</p>
+  <% else %>
+    <p>Starting at (<%= @event.start_date %>)</p>
+  <% end %>
+
+  <p>Created at (<%= @event.created_at %>)</p>
+<% end %>
 
 <p>By <%= @event.creator.full_name %> </p>
 
@@ -20,6 +30,12 @@
     <%= button_to "Resume Event", resume_event_path, method: :patch %>
   <% else %>
     <%= button_to "End Event", end_event_path, method: :patch %>
+  <% end %>
+
+  <% if @event.private %>
+    <%= button_to "Make Public", make_public_path, method: :patch %>
+  <% else %>
+    <%= button_to "Make Private", make_private_path, method: :patch %>
   <% end %>
 
   <%= link_to "Edit Event", edit_event_path %>
