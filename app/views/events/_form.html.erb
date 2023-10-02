@@ -1,0 +1,25 @@
+<%= form_with model: event do |form| %>
+  <div>
+    <%= form.label :name %><br/>
+    <%= form.text_field :name %>
+    <% if event.errors.include?(:name) %>
+      <% event.errors.full_messages_for(:name).each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+  <div>
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date %>
+    <% if event.errors.include?(:start_date) %>
+      <% event.errors.full_messages_for(:start_date).each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    <% end %>
+  </div>
+  <%= form.submit %>
+<% end %>
