@@ -5,5 +5,6 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Event.create(name: "Event 1", description: "Funi event", start_date: Date.new(2023,1,1))
-Event.create(name: "Event 2", start_date: Date.new(2023,1,2))
+user = User.first
+Event.create(creator_id: user.id, name: "Event 1", description: "Funi event", start_date: Date.new(2023,1,1))
+Event.create(creator_id: user.id, name: "Event 2", start_date: Date.new(2023,1,2))

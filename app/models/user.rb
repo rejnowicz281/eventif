@@ -4,6 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
           :rememberable, :validatable
 
+  has_many :events, foreign_key: "creator_id", dependent: :destroy
+
   validates :first_name, presence: true
   validates :last_name, presence: true
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end 
 end
