@@ -8,6 +8,9 @@ class EventsController < ApplicationController
   end
 
   def show
+    if @event.creator == current_user
+      @pending_memberships = @event.event_memberships.where(accepted: false)
+    end
   end
 
   def new

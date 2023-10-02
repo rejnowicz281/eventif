@@ -1,5 +1,5 @@
 class EventMembershipsController < ApplicationController
-    before_action :set_event, only: [:create, :destroy]
+    before_action :set_event, only: [:create, :destroy, :accept]
 
     def create
         if @event.private
@@ -12,9 +12,18 @@ class EventMembershipsController < ApplicationController
     end
 
     def destroy
-        @membership = EventMembership.find_by(event: @event)
+        @membership = EventMembership.find_by(event: @event, user_id: params[:user_id])
 
         @membership.destroy
+
+        redirect_to @event
+    end
+
+    # NON-CRUD actions
+    def accept
+        @membership = EventMembership.find_by(event: @event, user_id: params[:user_id])
+
+        @membership.update(accepted: true)
 
         redirect_to @event
     end

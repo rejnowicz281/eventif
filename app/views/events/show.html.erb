@@ -1,9 +1,13 @@
 <h1><%= @event.name %></h1>
 
-<% if @event.members.include?(current_user) %>
-  <%= button_to "Leave Event", destroy_event_membership_path, method: :delete %>
-<% else %>
-  <%= button_to "Join Event", create_event_membership_path, method: :post %>
+<% if @event.creator != current_user %>
+  <% if @event.accepted_members.include?(current_user) %>
+    <%= button_to "Leave Event", destroy_event_membership_path, params: { user_id: current_user.id }, method: :delete %>
+  <% elsif @event.non_accepted_members.include?(current_user) %>
+    <%= button_to "Cancel Request", destroy_event_membership_path, params: { user_id: current_user.id }, method: :delete %>
+  <% else %>
+    <%= button_to "Join Room", create_event_membership_path, method: :post %>
+  <% end %>
 <% end %>
 
 <% if @event.private %>
@@ -14,7 +18,7 @@
   <p>This event is <i>Public</i>.</p>
 <% end %>
 
-<% if !@event.private || (@event.private && (current_user == @event.creator || @event.members.include?(current_user))) %>
+<% if !@event.private || (@event.private && (current_user == @event.creator || @event.accepted_members.include?(current_user))) %>
   <% if @event.description %>
     <p><i><%= @event.description %></i></p>
   <% end %>
@@ -31,7 +35,18 @@
 
 <p>By <%= @event.creator.full_name %> </p>
 
+<hr />
+
+<h2>Members</h2>
+<% @event.accepted_members.each do |member| %>
+  <p><%= member.full_name %></p>
+  <% if @event.creator == current_user %>
+    <%= button_to "Remove from event", destroy_event_membership_path, params: { user_id: member.id }, method: :delete %>
+  <% end %>
+<% end %>
+
 <% if @event.creator == current_user %>
+  <hr />
   <% if @event.end_date %>
     <%= button_to "Resume Event", resume_event_path, method: :patch %>
   <% else %>
@@ -47,4 +62,12 @@
   <%= link_to "Edit Event", edit_event_path %>
 
   <%= button_to "Delete Event", destroy_event_path,  method: :delete %>
+
+  <hr />
+  <h3>Join requests</h3>
+  <% @pending_memberships.each do |request| %>
+    <p><%= request.user.full_name %></p>
+    <%= button_to "Accept Request", accept_event_membership_path, params: { user_id: request.user.id }, method: :patch %>
+    <%= button_to "Deny Request", destroy_event_membership_path, params: { user_id: request.user.id }, method: :delete %>
+  <% end %>
 <% end %>

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   post "/events/:id/join", to: "event_memberships#create", as: "create_event_membership"
   delete "/events/:id/leave", to: "event_memberships#destroy", as: "destroy_event_membership"
+  patch "/events/:id/accept_membership", to: "event_memberships#accept", as: "accept_event_membership"
 
   root "events#index"
 end
