@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :created_events, class_name: "Event", foreign_key: "creator_id", dependent: :destroy
   
-  has_many :event_memberships, foreign_key: "member_id", dependent: :destroy
+  has_many :event_memberships, dependent: :destroy
   has_many :joined_events, source: :event, through: :event_memberships
 
   validates :first_name, presence: true
