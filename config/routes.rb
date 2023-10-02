@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+
   get "/events", to: "events#index"
   get "/events/new", to: "events#new", as: "new_event"
   get "/events/:id", to: "events#show", as: "event"
@@ -11,6 +12,9 @@ Rails.application.routes.draw do
   patch "/events/:id/resume", to: "events#resume_event", as: "resume_event"
   patch "/events/:id/make_private", to: "events#make_private", as: "make_private"
   patch "/events/:id/make_public", to: "events#make_public", as: "make_public"
+
+  post "/events/:id/join", to: "event_memberships#create", as: "create_event_membership"
+  delete "/events/:id/leave", to: "event_memberships#destroy", as: "destroy_event_membership"
 
   root "events#index"
 end
