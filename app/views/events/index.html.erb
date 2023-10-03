@@ -1,8 +1,5 @@
-<h1>Events</h1>
-<ul>
+<div class="events">
   <% @events.each do |event| %>
-    <li>
-      <%= link_to (event.name + " | " + event.creator.full_name), event %>
-    </li>
+    <%= link_to event.name, event, class: "events__link" %>
   <% end %>
 </ul>

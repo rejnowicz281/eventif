@@ -1,0 +1,26 @@
+<div class="navbar">
+  <div class="navbar__top">
+    <div class="navbar__top__left">
+      <%= link_to "Home", root_path, class: "navbar__link" %>
+      <% if signed_in? %>
+        <%= link_to "New Event", new_event_path, class: "navbar__link" %>
+      <% end %>
+    </div>
+    <div class="navbar__top__right">
+      <% if signed_in? %>
+        <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, class: "navbar__link" %>
+      <% else %>
+        <%= link_to "Log in", new_user_session_path, class: "navbar__link" %>
+        <%= link_to "Register", new_user_registration_path, class: "navbar__link" %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if !flash.empty? %>
+    <div class="navbar__bottom">
+      <% flash.each do |type, msg| %>
+        <div class="navbar__flash"><%= msg %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

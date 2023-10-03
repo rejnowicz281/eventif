@@ -1,0 +1,39 @@
+.navbar {
+    background-color: var(--color-navbar);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+
+        &__left {
+            display: flex;
+        }
+
+        &__right {
+            display: flex;
+        }
+    }
+
+    &__bottom {
+        padding: 20px;
+        border-top: var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    &__link {
+        color: inherit;
+        text-decoration: none;
+        padding: 20px;
+
+        &:hover {
+            background-color: rgb(41, 46, 48);
+        }
+    }
+}
