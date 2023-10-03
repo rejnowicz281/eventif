@@ -1,17 +1,14 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [
-    :show, :edit, :update, :destroy, 
-    :end_event, :resume_event, :make_private, :make_public]
+  before_action :set_event, only: %i[
+    show edit update destroy
+    end_event resume_event make_private make_public
+  ]
 
   def index
     @events = Event.all
   end
 
-  def show
-    if @event.creator == current_user
-      @pending_memberships = @event.event_memberships.where(accepted: false)
-    end
-  end
+  def show; end
 
   def new
     @event = current_user.created_events.build
@@ -27,8 +24,7 @@ class EventsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @event.update(event_params)
@@ -46,30 +42,31 @@ class EventsController < ApplicationController
 
   # NON-CRUD actions
   def end_event
-    if @event.update(end_date: Date.today)
-      redirect_to @event
-    end
+    return unless @event.update(end_date: Date.today)
+
+    redirect_to @event
   end
 
   def resume_event
-    if @event.update(end_date: nil)
-      redirect_to @event
-    end
+    return unless @event.update(end_date: nil)
+
+    redirect_to @event
   end
 
   def make_private
-    if @event.update(private: true)
-      redirect_to @event
-    end
+    return unless @event.update(private: true)
+
+    redirect_to @event
   end
 
   def make_public
-    if @event.update(private: false)
-      redirect_to @event
-    end
+    return unless @event.update(private: false)
+
+    redirect_to @event
   end
 
   private
+
   def event_params
     params.require(:event).permit(:name, :description, :start_date, :private)
   end
