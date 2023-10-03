@@ -42,7 +42,7 @@ class EventsController < ApplicationController
 
   # NON-CRUD actions
   def end_event
-    return unless @event.update(end_date: Date.today)
+    return unless @event.update(end_date: DateTime.now)
 
     redirect_to @event
   end
