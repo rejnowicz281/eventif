@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
     belongs_to :creator, class_name: "User"
     
+    has_many :comments, class_name: "EventComment", dependent: :destroy
+
     has_many :event_memberships, dependent: :destroy
 
     validates_presence_of :name

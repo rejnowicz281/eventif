@@ -8,6 +8,8 @@ class User < ApplicationRecord
   
   has_many :event_memberships, dependent: :destroy
 
+  has_many :event_comments, foreign_key: "author_id", dependent: :destroy
+
   validates :first_name, presence: true
   validates :last_name, presence: true
 
