@@ -1,5 +1,7 @@
 class EventCommentsController < ApplicationController
   def create
+    authorize EventComment
+
     @event = Event.find(params[:id])
     @comment = current_user.event_comments.build(comment_params)
     @comment.event_id = @event.id
@@ -13,6 +15,8 @@ class EventCommentsController < ApplicationController
 
   def destroy
     @comment = EventComment.find(params[:comment_id])
+
+    authorize @comment
 
     @comment.destroy
 
