@@ -11,10 +11,14 @@ class EventsController < ApplicationController
   def show; end
 
   def new
+    authorize Event
+
     @event = current_user.created_events.build
   end
 
   def create
+    authorize Event
+
     @event = current_user.created_events.build(event_params)
 
     if @event.save
@@ -24,9 +28,13 @@ class EventsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @event
+  end
 
   def update
+    authorize @event
+
     if @event.update(event_params)
       redirect_to @event
     else
@@ -35,6 +43,8 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    authorize @event
+
     @event.destroy
 
     redirect_to root_path
@@ -42,24 +52,32 @@ class EventsController < ApplicationController
 
   # NON-CRUD actions
   def end_event
+    authorize @event
+
     return unless @event.update(end_date: DateTime.now)
 
     redirect_to @event
   end
 
   def resume_event
+    authorize @event
+
     return unless @event.update(end_date: nil)
 
     redirect_to @event
   end
 
   def make_private
+    authorize @event
+
     return unless @event.update(private: true)
 
     redirect_to @event
   end
 
   def make_public
+    authorize @event
+
     return unless @event.update(private: false)
 
     redirect_to @event
