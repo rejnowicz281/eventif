@@ -8,7 +8,7 @@
 
 <h1><%= @event.name %></h1>
 
-<% if !is_creator %>
+<% if current_user && !is_creator %>
   <% if is_accepted_member %>
     <%= button_to "Leave Event", destroy_event_membership_path, params: { user_id: current_user.id }, method: :delete %>
   <% elsif is_non_accepted_member %>
@@ -19,9 +19,13 @@
 <% end %>
 
 <% if @event.private %>
-  <p>This event is <i>Private</i>. <%= is_creator ?
-  "That means you have to approve of any join requests to this event. Users that haven't joined can't see the contents of the event" 
-  : "The creator needs to approve your request before joining the event" %>.</p>
+  <p>This event is <i>Private</i>. <%= 
+  !current_user ?
+  "Sign in to send a join request" : 
+  is_creator ? 
+  "That means you have to approve of any join requests to this event. Users that haven't joined can't see the contents of the event"
+  :
+  "The creator needs to approve your request before joining the event" %>.</p>
 <% else %>
   <p>This event is <i>Public</i>.</p>
 <% end %>
@@ -56,17 +60,19 @@
 <hr />
 
 <h2>Comments</h2>
-<%= form_with model: [@event, EventComment.new], method: :post do |form| %>
-  <div>
-    <%= form.label :body %>
-    <%= form.text_field :body %>
-    <% if @comment && @comment.errors.include?(:body) %>
-      <% @comment.errors.full_messages_for(:body).each do |msg| %>
-        <li><%= msg %></li>
+<% if current_user %>
+  <%= form_with model: [@event, EventComment.new], method: :post do |form| %>
+    <div>
+      <%= form.label :body %>
+      <%= form.text_field :body %>
+      <% if @comment && @comment.errors.include?(:body) %>
+        <% @comment.errors.full_messages_for(:body).each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-  <%= form.submit "Comment" %>
+    </div>
+    <%= form.submit "Comment" %>
+  <% end %>
 <% end %>
 <% @event.comments.each do |comment| %>
   <div>
