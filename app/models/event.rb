@@ -1,24 +1,17 @@
 class Event < ApplicationRecord
-    belongs_to :creator, class_name: "User"
-    
-    has_many :comments, class_name: "EventComment", dependent: :destroy
+  belongs_to :creator, class_name: 'User'
 
-    has_many :event_memberships, dependent: :destroy
+  has_many :comments, class_name: 'EventComment', dependent: :destroy
 
-    validates_presence_of :name
-    validates_presence_of :start_date, message: "must be set"
+  has_many :event_memberships, dependent: :destroy
+  has_many :members, class_name: 'User', source: :user, through: :event_memberships
+  has_many :accepted_members, lambda {
+                                where(event_memberships: { accepted: true })
+                              }, class_name: 'User', source: :user, through: :event_memberships
+  has_many :non_accepted_members, lambda {
+                                    where(event_memberships: { accepted: false })
+                                  }, class_name: 'User', source: :user, through: :event_memberships
 
-    def accepted_members
-        event_memberships = self.event_memberships.where(accepted: true)
-        arr = []
-        event_memberships.each { |event_membership| arr.append(event_membership.user) } if !event_memberships.empty?
-        arr
-    end
-
-    def non_accepted_members
-        event_memberships = self.event_memberships.where(accepted: false)
-        arr = []
-        event_memberships.each { |event_membership| arr.append(event_membership.user) } if !event_memberships.empty?
-        arr
-      end
+  validates_presence_of :name
+  validates_presence_of :start_date, message: 'must be set'
 end
