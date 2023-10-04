@@ -1,0 +1,46 @@
+.event {
+    max-width: 600px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    word-break: break-word;
+
+    &__name {
+        padding-bottom: var(--space-s);
+    }
+
+    &__info {
+        color: rgb(153, 153, 153);
+        font-size: var(--font-size-s);
+        padding-bottom: var(--space-s);
+    }
+
+    &__membership-button {
+        width: 100%;
+        cursor: pointer;
+        padding: 5px 0;
+        background-color: rgb(41, 41, 61);
+        color: inherit;
+        border: var(--border-grey);
+
+        &:hover {
+            background-color: rgb(55, 55, 85);
+        }
+    }
+
+    &__description {
+        font-size: var(--font-size-l);
+        padding-bottom: var(--space-s);
+    }
+
+    &__date {
+        padding-bottom: var(--space-s);
+        font-size: var(--font-size-s);
+    }
+
+    &__organizator {
+        font-size: var(--font-size-s);
+        padding-bottom: var(--space-s);
+    }
+}

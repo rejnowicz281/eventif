@@ -6,109 +6,111 @@
   <% pending_memberships = @event.event_memberships.where(accepted: false) %>
 <% end %>
 
-<h1><%= @event.name %></h1>
-
-<% if current_user && !is_creator %>
-  <% if is_accepted_member %>
-    <%= button_to "Leave Event", destroy_event_membership_path, params: { user_id: current_user.id }, method: :delete %>
-  <% elsif is_non_accepted_member %>
-    <%= button_to "Cancel Request", destroy_event_membership_path, params: { user_id: current_user.id }, method: :delete %>
-  <% else %>
-    <%= button_to "Join Room", create_event_membership_path, method: :post %>
-  <% end %>
-<% end %>
-
-<% if @event.private %>
-  <p>This event is <i>Private</i>. <%= 
-  !current_user ?
-  "Sign in to send a join request" : 
-  is_creator ? 
-  "That means you have to approve of any join requests to this event. Users that haven't joined can't see the contents of the event"
-  :
-  "The creator needs to approve your request before joining the event" %>.</p>
-<% else %>
-  <p>This event is <i>Public</i>.</p>
-<% end %>
-
-<% if has_access %>
-  <% if @event.description %>
-    <p><i><%= @event.description %></i></p>
-  <% end %>
-
-  <% if @event.end_date %>
-    <p>Started at (<%= @event.start_date %>)</p>
-    <p>Ended at (<%= @event.end_date %>)</p>
-  <% else %>
-    <p>Starting at (<%= @event.start_date %>)</p>
-  <% end %>
-
-  <p>Created at (<%= @event.created_at %>)</p>
-<% end %>
-
-<p>By <%= @event.creator.full_name %> </p>
-
-<% if has_access %>
-  <h2>Members</h2>
-  <% @event.accepted_members.each do |member| %>
-    <p><%= member.full_name %></p>
-    <% if is_creator %>
-      <%= button_to "Remove from event", destroy_event_membership_path, params: { user_id: member.id }, method: :delete %>
+<div class="event">
+  <h1 class="event__name"><%= @event.name %></h1>
+  <p class="event__organizator">Organizator: <%= @event.creator.full_name %> </p>
+  <% if current_user && !is_creator %>
+    <% if is_accepted_member %>
+      <%= button_to "Leave Event", destroy_event_membership_path, class:"event__membership-button", params: { user_id: current_user.id }, method: :delete %>
+    <% elsif is_non_accepted_member %>
+      <%= button_to "Cancel Request", destroy_event_membership_path, class:"event__membership-button", params: { user_id: current_user.id }, method: :delete %>
+    <% else %>
+      <%= button_to "Join Room", create_event_membership_path, class:"event__membership-button", method: :post %>
     <% end %>
   <% end %>
-<% end %>
 
-<hr />
+  <p class="event__info">
+    <% if @event.private %>
+      This event is <i>Private</i>. <%=
+    !current_user ?
+    "Sign in to send a join request" :
+    is_creator ?
+    "That means you have to approve of any join requests to this event. Users that haven't joined can't see the contents of the event"
+    :
+    "The organizator needs to approve your request before joining the event" %>.
+    <% else %>
+      This event is <i>Public</i>.
+    <% end %>
+  </p>
 
-<h2>Comments</h2>
-<% if current_user %>
-  <%= form_with model: [@event, EventComment.new], method: :post do |form| %>
-    <div>
-      <%= form.label :body %>
-      <%= form.text_field :body %>
-      <% if @comment && @comment.errors.include?(:body) %>
-        <% @comment.errors.full_messages_for(:body).each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
+  <% if has_access %>
+    <% if !@event.description.empty? %>
+      <p class="event__description"><i><%= @event.description %></i></p>
+    <% end %>
+
+    <% if @event.end_date %>
+      <p class="event__date">Started: <%= @event.start_date %></p>
+      <p class="event__date">Ended: <%= @event.end_date %></p>
+    <% else %>
+      <p class="event__date">Starting: <%= @event.start_date %></p>
+    <% end %>
+
+    <p class="event__date">Created: <%= @event.created_at %></p>
+  <% end %>
+
+  <% if has_access %>
+    <h2>Members</h2>
+    <% @event.accepted_members.each do |member| %>
+      <p><%= member.full_name %></p>
+      <% if is_creator %>
+        <%= button_to "Remove from event", destroy_event_membership_path, params: { user_id: member.id }, method: :delete %>
       <% end %>
-    </div>
-    <%= form.submit "Comment" %>
-  <% end %>
-<% end %>
-<% @event.comments.each do |comment| %>
-  <div>
-    <h3><%= comment.body %></h3>
-    <p>By <%= comment.author.full_name %></p>
-    <% if is_creator || comment.author == current_user %>
-      <%= button_to "Delete comment", destroy_event_comment_path, params: { comment_id: comment.id }, method: :delete %>
     <% end %>
-    <hr/>
-  </div>
-<% end %>
-
-<% if is_creator %>
-  <hr />
-  <% if @event.end_date %>
-    <%= button_to "Resume Event", resume_event_path, method: :patch %>
-  <% else %>
-    <%= button_to "End Event", end_event_path, method: :patch %>
   <% end %>
-
-  <% if @event.private %>
-    <%= button_to "Make Public", make_public_path, method: :patch %>
-  <% else %>
-    <%= button_to "Make Private", make_private_path, method: :patch %>
-  <% end %>
-
-  <%= link_to "Edit Event", edit_event_path %>
-
-  <%= button_to "Delete Event", destroy_event_path,  method: :delete %>
 
   <hr />
 
-  <h2>Join requests</h2>
-  <% pending_memberships.each do |request| %>
-    <p><%= request.user.full_name %></p>
-    <%= button_to "Accept Request", accept_event_membership_path, params: { user_id: request.user.id }, method: :patch %>
-    <%= button_to "Deny Request", destroy_event_membership_path, params: { user_id: request.user.id }, method: :delete %>
+  <h2>Comments</h2>
+  <% if current_user %>
+    <%= form_with model: [@event, EventComment.new], method: :post do |form| %>
+      <div>
+        <%= form.label :body %>
+        <%= form.text_field :body %>
+        <% if @comment && @comment.errors.include?(:body) %>
+          <% @comment.errors.full_messages_for(:body).each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        <% end %>
+      </div>
+      <%= form.submit "Comment" %>
+    <% end %>
   <% end %>
-<% end %>
+  <% @event.comments.each do |comment| %>
+    <div>
+      <h3><%= comment.body %></h3>
+      <p>By <%= comment.author.full_name %></p>
+      <% if is_creator || comment.author == current_user %>
+        <%= button_to "Delete comment", destroy_event_comment_path, params: { comment_id: comment.id }, method: :delete %>
+      <% end %>
+      <hr/>
+    </div>
+  <% end %>
+
+  <% if is_creator %>
+    <hr />
+    <% if @event.end_date %>
+      <%= button_to "Resume Event", resume_event_path, method: :patch %>
+    <% else %>
+      <%= button_to "End Event", end_event_path, method: :patch %>
+    <% end %>
+
+    <% if @event.private %>
+      <%= button_to "Make Public", make_public_path, method: :patch %>
+    <% else %>
+      <%= button_to "Make Private", make_private_path, method: :patch %>
+    <% end %>
+
+    <%= link_to "Edit Event", edit_event_path %>
+
+    <%= button_to "Delete Event", destroy_event_path,  method: :delete %>
+
+    <hr />
+
+    <h2>Join requests</h2>
+    <% pending_memberships.each do |request| %>
+      <p><%= request.user.full_name %></p>
+      <%= button_to "Accept Request", accept_event_membership_path, params: { user_id: request.user.id }, method: :patch %>
+      <%= button_to "Deny Request", destroy_event_membership_path, params: { user_id: request.user.id }, method: :delete %>
+    <% end %>
+  <% end %>
+</div>
