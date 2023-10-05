@@ -1,8 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[
-    show edit update destroy
-    end_event resume_event make_private make_public
-  ]
+  before_action :set_event, except: %i[index new create]
 
   def index
     @events = Event.all
@@ -54,7 +51,7 @@ class EventsController < ApplicationController
   end
 
   # NON-CRUD actions
-  def end_event
+  def end
     authorize @event
 
     return unless @event.update(end_date: DateTime.now)
@@ -62,7 +59,7 @@ class EventsController < ApplicationController
     redirect_to @event
   end
 
-  def resume_event
+  def resume
     authorize @event
 
     return unless @event.update(end_date: nil)

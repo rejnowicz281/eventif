@@ -11,11 +11,11 @@
   <p class="event__organizator">Organizator: <%= @event.creator.full_name %> </p>
   <% if current_user && !is_creator %>
     <% if is_accepted_member %>
-      <%= button_to "Leave Event", destroy_event_membership_path, class:"event__membership-button", params: { user_id: current_user.id }, method: :delete %>
+      <%= button_to "Leave Event", destroy_event_membership_path(@event, current_user), class:"event__membership-button", method: :delete %>
     <% elsif is_non_accepted_member %>
-      <%= button_to "Cancel Request", destroy_event_membership_path, class:"event__membership-button", params: { user_id: current_user.id }, method: :delete %>
+      <%= button_to "Cancel Request", destroy_event_membership_path(@event, current_user), class:"event__membership-button", method: :delete %>
     <% else %>
-      <%= button_to "Join Room", create_event_membership_path, class:"event__membership-button", method: :post %>
+      <%= button_to "Join Room", join_event_path, class:"event__membership-button", method: :post %>
     <% end %>
   <% end %>
 
@@ -53,7 +53,7 @@
     <% @event.accepted_members.each do |member| %>
       <p><%= member.full_name %></p>
       <% if is_creator %>
-        <%= button_to "Remove from event", destroy_event_membership_path, params: { user_id: member.id }, method: :delete %>
+        <%= button_to "Remove from event", destroy_event_membership_path(@event, member), method: :delete %>
       <% end %>
     <% end %>
   <% end %>
@@ -62,7 +62,7 @@
 
   <h2>Comments</h2>
   <% if current_user %>
-    <%= form_with model: [@event, EventComment.new], method: :post do |form| %>
+    <%= form_with model: EventComment.new, method: :post do |form| %>
       <div>
         <%= form.label :body %>
         <%= form.text_field :body %>
@@ -80,7 +80,7 @@
       <h3><%= comment.body %></h3>
       <p>By <%= comment.author.full_name %></p>
       <% if is_creator || comment.author == current_user %>
-        <%= button_to "Delete comment", destroy_event_comment_path, params: { comment_id: comment.id }, method: :delete %>
+        <%= button_to "Delete comment", destroy_event_comment_path(comment), method: :delete %>
       <% end %>
       <hr/>
     </div>
@@ -95,9 +95,9 @@
     <% end %>
 
     <% if @event.private %>
-      <%= button_to "Make Public", make_public_path, method: :patch %>
+      <%= button_to "Make Public", make_event_public_path, method: :patch %>
     <% else %>
-      <%= button_to "Make Private", make_private_path, method: :patch %>
+      <%= button_to "Make Private", make_event_private_path, method: :patch %>
     <% end %>
 
     <%= link_to "Edit Event", edit_event_path %>
@@ -109,8 +109,8 @@
     <h2>Join requests</h2>
     <% pending_memberships.each do |request| %>
       <p><%= request.user.full_name %></p>
-      <%= button_to "Accept Request", accept_event_membership_path, params: { user_id: request.user.id }, method: :patch %>
-      <%= button_to "Deny Request", destroy_event_membership_path, params: { user_id: request.user.id }, method: :delete %>
+      <%= button_to "Accept Request", accept_event_membership_path(@event, request.user), method: :patch %>
+      <%= button_to "Deny Request", destroy_event_membership_path(@event, request.user), method: :delete %>
     <% end %>
   <% end %>
 </div>

@@ -2,25 +2,25 @@ class EventCommentsController < ApplicationController
   def create
     authorize EventComment
 
-    @event = Event.find(params[:id])
-    @comment = current_user.event_comments.build(comment_params)
-    @comment.event_id = @event.id
+    @comment = current_user.event_comments.build(comment_params.merge({ event_id: params[:id], author: current_user }))
 
     if @comment.save
       redirect_to "/events/#{params[:id]}"
     else
+      @event = @comment.event
+
       render 'events/show', status: :unprocessable_entity
     end
   end
 
   def destroy
-    @comment = EventComment.find(params[:comment_id])
+    @comment = EventComment.find(params[:id])
 
     authorize @comment
 
     @comment.destroy
 
-    redirect_to "/events/#{params[:id]}"
+    redirect_to @comment.event
   end
 
   private

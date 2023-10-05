@@ -18,11 +18,11 @@ class EventPolicy < ApplicationPolicy
     is_creator?
   end
 
-  def end_event?
+  def end?
     is_creator?
   end
 
-  def resume_event?
+  def resume?
     is_creator?
   end
 
