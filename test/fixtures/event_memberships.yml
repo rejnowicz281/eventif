@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  member: one
-  event: one
+    user: one
+    event: two
+    accepted: false
 
 two:
-  member: two
-  event: two
+    user: two
+    event: one
+    accepted: true

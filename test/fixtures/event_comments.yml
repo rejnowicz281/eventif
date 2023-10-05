@@ -1,9 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  body: MyString
-  author: one
+    body: I am the creator of this event
+    author: one
+    event: one
 
 two:
-  body: MyString
-  author: two
+    body: Hi there
+    author: two
+    event: one
+
+three:
+    body: Ayo
+    author: one
+    event: two

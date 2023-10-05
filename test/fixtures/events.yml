@@ -3,9 +3,6 @@
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
-#
-one: {}
 # column: value
-#
-two: {}
-# column: value
+one: { name: Event One, description: This is a fancy event, start_date: 2014-01-01, creator: one }
+two: { name: Event Two, description: This is a fancy private event, start_date: 2014-02-01, creator: two }
