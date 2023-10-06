@@ -6,7 +6,8 @@ A simple event app built with Rails.
 
 -   Authentication (Devise) and Authorization (Pundit)
 -   Create, edit and delete private/public events
--   Join events
+-   Join and leave events
+-   Remove users from events as event creator
 -   Comment on events
 
 ## Starting the app
