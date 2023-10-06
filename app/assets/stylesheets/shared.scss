@@ -43,6 +43,9 @@
     }
 
     &__submit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border: none;
         background-color: inherit;
         cursor: pointer;
@@ -50,9 +53,7 @@
         border-top-right-radius: 25px;
         border-bottom-right-radius: 25px;
         color: rgb(48, 127, 128);
-        font-weight: bold;
-        padding: 5px;
-        text-transform: uppercase;
+        padding-right: 5px;
 
         &:hover {
             color: rgb(130, 168, 218);

@@ -75,7 +75,9 @@
         <%= form_with model: EventComment.new, method: :post do |form| %>
           <div class="input-box">
             <%= form.text_field :body, class: "input-box__input", placeholder: "Leave a comment!" %>
-            <%= form.submit "SEND", class: "input-box__submit" %>
+            <%= form.button class: "input-box__submit" do %>
+              <%= material_icon.shape(:send) %>
+            <% end %>
           </div>
           <% if @comment && @comment.errors.include?(:body) %>
             <% @comment.errors.full_messages_for(:body).each do |msg| %>

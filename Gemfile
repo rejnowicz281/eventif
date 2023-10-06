@@ -74,3 +74,5 @@ group :test do
 end
 
 gem "pundit", "~> 2.3"
+
+gem "material_icons", "~> 4.0"
