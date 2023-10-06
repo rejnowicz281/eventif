@@ -8,6 +8,37 @@
         word-break: break-word;
         padding: 50px 0;
         flex: 0 0 350px;
+        transition: 0.2s;
+
+        &__toggle {
+            display: none;
+            background-color: transparent;
+            border: none;
+            color: whitesmoke;
+            position: fixed;
+            left: 15px;
+            bottom: 15px;
+            cursor: pointer;
+            scale: 2;
+            z-index: 1;
+        }
+
+        @media (max-width: 1300px) {
+            background-color: #191e1f;
+            border-right: 1px solid #2c2c2c;
+            position: fixed;
+            width: 350px;
+            min-height: 100vh;
+            left: -350px;
+
+            &__toggle {
+                display: block;
+            }
+
+            &--open {
+                left: 0;
+            }
+        }
     }
 
     &__middle {
@@ -20,6 +51,36 @@
         word-break: break-word;
         padding: 50px 0;
         flex: 0 0 350px;
+        transition: 0.2s;
+
+        &__toggle {
+            display: none;
+            background-color: transparent;
+            border: none;
+            color: whitesmoke;
+            scale: 2;
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        @media (max-width: 1300px) {
+            background-color: #191e1f;
+            border-left: 1px solid #2c2c2c;
+            position: fixed;
+            width: 350px;
+            min-height: 100vh;
+            right: -350px;
+
+            &__toggle {
+                display: block;
+            }
+            &--open {
+                right: 0;
+            }
+        }
     }
 
     &__description {

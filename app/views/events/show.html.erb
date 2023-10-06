@@ -6,8 +6,12 @@
   <% pending_memberships = @event.event_memberships.where(accepted: false) %>
 <% end %>
 
-<div class="event">
-  <div class="event__left-sidebar">
+<div data-controller="event-sidebars" data-event-sidebars-left-class="event__left-sidebar--open"
+data-event-sidebars-right-class="event__right-sidebar--open" class="event">
+  <button data-action="click->event-sidebars#toggleLeft" class="event__left-sidebar__toggle" type="button">
+    <%= material_icon.shape(:menu) %>
+  </button>
+  <div data-event-sidebars-target="left" class="event__left-sidebar">
     <h2 class="event__organizator">Organizator: 
       <div><%= @event.creator.full_name %></div>
     </h2>
@@ -102,7 +106,10 @@
     </div>
   </div>
   <% if is_creator %>
-    <div class="event__right-sidebar">
+    <button data-action="click->event-sidebars#toggleRight" class="event__right-sidebar__toggle" type="button">
+      <%= material_icon.shape(:info) %>
+    </button>
+    <div data-event-sidebars-target="right" class="event__right-sidebar">
       <% if @event.end_date %>
         <%= button_to "Resume Event", resume_event_path, method: :patch, class: "event__admin-button event__admin-button--resume" %>
       <% else %>
