@@ -1,0 +1,89 @@
+.auth-form {
+    max-width: 350px;
+    width: 100%;
+    margin: 50px auto 0 auto;
+
+    &__heading {
+        margin-bottom: 20px;
+    }
+
+    &__field {
+        width: 100%;
+        margin-bottom: 10px;
+
+        &--remember-me {
+            color: rgb(207, 207, 207);
+            font-weight: bold;
+        }
+
+        &__error {
+            color: var(--color-danger);
+        }
+
+        &__label {
+            display: block;
+            color: rgb(210, 210, 210);
+            font-weight: 500;
+            margin-bottom: 10px;
+
+            &--password {
+                margin-bottom: 0;
+            }
+        }
+
+        &__input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgb(191, 191, 191);
+            border-radius: 5px;
+            font-size: 13px;
+            outline: none;
+            transition: 0.1s;
+            box-sizing: border-box;
+
+            &:focus {
+                border-color: rgb(127, 115, 115);
+            }
+        }
+    }
+
+    &__continue {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        outline: none;
+        transition: 0.1s;
+        background-color: #5d4fab;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 30px;
+
+        &:hover {
+            background-color: #7565d3;
+        }
+
+        &:disabled {
+            background-color: rgb(191, 191, 191);
+            color: rgb(127, 127, 127);
+            cursor: not-allowed;
+        }
+    }
+
+    &__link-container {
+        color: rgb(197, 197, 197);
+
+        &__link {
+            color: rgb(102, 132, 196);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

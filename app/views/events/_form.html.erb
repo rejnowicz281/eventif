@@ -1,29 +1,29 @@
-<%= form_with model: event, method: method do |form| %>
-  <div>
-    <%= form.label :name %><br/>
-    <%= form.text_field :name %>
+<%= form_with model: event, method: method, class: "event-form" do |form| %>
+  <div class="event-form__field">
+    <%= form.label :name, class: "event-form__field__label" %>
+    <%= form.text_field :name, class: "event-form__field__input" %>
     <% if event.errors.include?(:name) %>
       <% event.errors.full_messages_for(:name).each do |msg| %>
-        <li><%= msg %></li>
+        <li class="event-form__field__error"><%= msg %></li>
       <% end %>
     <% end %>
   </div>
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <div class="event-form__field">
+    <%= form.label :description, class: "event-form__field__label" %>
+    <%= form.text_area :description, class: "event-form__field__input" %>
   </div>
-  <div>
-    <%= form.label :start_date %>
-    <%= form.datetime_field :start_date %>
+  <div class="event-form__field">
+    <%= form.label :start_date, class: "event-form__field__label" %>
+    <%= form.datetime_field :start_date, class: "event-form__field__input" %>
     <% if event.errors.include?(:start_date) %>
       <% event.errors.full_messages_for(:start_date).each do |msg| %>
-        <li><%= msg %></li>
+        <li class="event-form__field__error"><%= msg %></li>
       <% end %>
     <% end %>
   </div>
-  <div>
-    <%= form.label :private %>
+  <div class="event-form__field">
+    <%= form.label :private, class: "event-form__field__label event-form__field__label--private-checkbox" %>
     <%= form.check_box :private %>
   </div>
-  <%= form.submit %>
+  <%= form.submit class: "event-form__submit" %>
 <% end %>

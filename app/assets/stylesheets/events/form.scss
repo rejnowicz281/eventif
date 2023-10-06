@@ -1,0 +1,33 @@
+.event-form-container {
+    max-width: 600px;
+    width: 100%;
+    margin: 50px auto 0 auto;
+}
+
+.event-form {
+    &__field {
+        &__label {
+            display: block;
+            padding-bottom: var(--space-xxxs);
+
+            &--private-checkbox {
+                display: inline-block;
+            }
+        }
+
+        &__input {
+            width: 100%;
+        }
+    }
+
+    &__submit {
+        cursor: pointer;
+        padding: 5px 0;
+        width: 100%;
+        background-color: whitesmoke;
+
+        &:hover {
+            background-color: rgb(255, 212, 212);
+        }
+    }
+}
