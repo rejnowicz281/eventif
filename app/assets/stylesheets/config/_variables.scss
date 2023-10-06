@@ -6,10 +6,10 @@
 
     --font-size-xs: 12px;
     --font-size-s: 14px;
-    --font-size-m:  18px;
-    --font-size-l:  20px;
-    --font-size-xl:  25px;
-    --font-size-xxl: 30px
+    --font-size-m: 18px;
+    --font-size-l: 20px;
+    --font-size-xl: 25px;
+    --font-size-xxl: 30px;
     --font-size-xxxl: 35px;
     --font-size-xxxxl: 50px;
 
@@ -24,7 +24,10 @@
     --space-xxxl: 48px;
     --space-xxxxl: 64px;
 
-    --color-text-body: rgb(219, 223, 224);
+    --color-body: rgb(219, 223, 224);
+    --color-danger: rgb(255, 115, 115);
+    --color-danger-dimmed: rgb(255, 83, 83);
+    --color-muted: rgb(153, 153, 153);
     --color-background: rgb(28, 27, 34);
     --color-navbar: rgb(28, 32, 39);
 

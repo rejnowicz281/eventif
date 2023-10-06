@@ -1,46 +1,195 @@
 .event {
-    max-width: 600px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-    word-break: break-word;
+    display: flex;
+    justify-content: center;
+    gap: 75px;
+    padding: 0 20px;
 
-    &__name {
-        padding-bottom: var(--space-s);
+    &__left-sidebar {
+        word-break: break-word;
+        padding: 50px 0;
+        flex: 0 0 350px;
     }
 
-    &__info {
-        color: rgb(153, 153, 153);
+    &__middle {
+        word-break: break-word;
+        padding: 50px 0;
+        flex: 0 1 650px;
+    }
+
+    &__right-sidebar {
+        word-break: break-word;
+        padding: 50px 0;
+        flex: 0 0 350px;
+    }
+
+    &__description {
+        font-size: var(--font-size-l);
+    }
+
+    &__date {
         font-size: var(--font-size-s);
+    }
+
+    &__comments-container {
+        border-top: var(--border-grey);
+        padding-top: var(--space-s);
+        margin-top: var(--space-s);
+    }
+
+    &__comments {
+        padding-top: 10px;
+    }
+
+    &__comment {
+        padding-bottom: 30px;
+
+        &__author {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        &__delete {
+            color: var(--color-danger);
+            font-size: var(--font-size-s);
+            border: none;
+            background-color: inherit;
+            cursor: pointer;
+            padding: 0;
+            display: block;
+
+            &:hover {
+                color: var(--color-danger-dimmed);
+            }
+        }
+    }
+
+    &__organizator {
         padding-bottom: var(--space-s);
     }
 
     &__membership-button {
         width: 100%;
         cursor: pointer;
-        padding: 5px 0;
+        padding: 5px;
         background-color: rgb(41, 41, 61);
         color: inherit;
-        border: var(--border-grey);
+        border: none;
 
         &:hover {
             background-color: rgb(55, 55, 85);
         }
     }
 
-    &__description {
-        font-size: var(--font-size-l);
-        padding-bottom: var(--space-s);
+    &__members-container {
+        padding-top: var(--space-s);
+
+        > .muted {
+            padding-top: var(--space-s);
+        }
     }
 
-    &__date {
-        padding-bottom: var(--space-s);
-        font-size: var(--font-size-s);
+    &__remove-from-event-button {
+        cursor: pointer;
+        padding: 5px;
+        background-color: var(--color-danger-dimmed);
+        color: inherit;
+        font-weight: bold;
+        border: none;
+
+        &:hover {
+            background-color: var(--color-danger);
+        }
     }
 
-    &__organizator {
-        font-size: var(--font-size-s);
-        padding-bottom: var(--space-s);
+    &__admin-button {
+        width: 100%;
+        cursor: pointer;
+        padding: 5px;
+        color: inherit;
+        font-weight: bold;
+        border: none;
+
+        &--end {
+            background-color: rgb(255, 108, 50);
+
+            &:hover {
+                background-color: rgb(255, 95, 32);
+            }
+        }
+
+        &--resume {
+            background-color: rgb(34, 199, 34);
+            &:hover {
+                background-color: rgb(26, 153, 26);
+            }
+        }
+
+        &--make-private {
+            background-color: rgb(77, 77, 255);
+
+            &:hover {
+                background-color: rgb(108, 108, 255);
+            }
+        }
+
+        &--make-public {
+            background-color: rgb(57, 57, 199);
+
+            &:hover {
+                background-color: rgb(64, 64, 167);
+            }
+        }
+
+        &--edit {
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            background-color: rgb(58, 58, 58);
+            color: var(--color-body);
+
+            &:hover {
+                background-color: rgb(48, 48, 48);
+            }
+        }
+
+        &--delete {
+            background-color: var(--color-danger-dimmed);
+            &:hover {
+                background-color: var(--color-danger);
+            }
+        }
+    }
+
+    &__join-requests-container {
+        padding-top: var(--space-s);
+
+        > .muted {
+            padding-top: var(--space-s);
+        }
+    }
+
+    &__request-button {
+        width: 100%;
+        cursor: pointer;
+        padding: 5px;
+        color: inherit;
+        font-weight: bold;
+        border: none;
+
+        &--deny {
+            background-color: var(--color-danger-dimmed);
+
+            &:hover {
+                background-color: var(--color-danger);
+            }
+        }
+
+        &--accept {
+            background-color: rgb(26, 153, 26);
+
+            &:hover {
+                background-color: rgb(34, 199, 34);
+            }
+        }
     }
 }

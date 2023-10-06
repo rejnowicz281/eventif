@@ -10,7 +10,6 @@
 }
 
 html {
-    overflow-y: scroll;
     height: 100%;
 }
 
@@ -18,9 +17,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-
     background-color: var(--color-background);
-    color: var(--color-text-body);
+    color: var(--color-body);
     line-height: var(--line-height-body);
     font-family: var(--main-font);
     font-size: var(--font-size-m);
